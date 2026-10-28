@@ -3,6 +3,7 @@ import streamlit as st
 from src.screens.home_screen import home_screen
 from src.screens.student_screen import student_screen
 from src.screens.teacher_screen import teacher_screen
+from src.styles.theme import apply_theme
 
 # Configure main application entry point
 st.set_page_config(
@@ -11,6 +12,9 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# Apply centralized styling foundation
+apply_theme()
 
 # Define native pages using Streamlit's multipage navigation API
 pages = {

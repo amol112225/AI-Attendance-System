@@ -1,0 +1,15 @@
+[theme]
+# Primary dark blue / navy
+primaryColor = "#1e3a8a"
+
+# Clean light backgrounds
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f8fafc"
+
+# High-contrast readable typography
+textColor = "#0f172a"
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false
+
