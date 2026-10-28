@@ -1,0 +1,20 @@
+# utilities
+numpy
+pandas
+
+# Face Recognition
+scikit-learn
+dlib-bin
+
+# 
+git+https://github.com/ageitgey/face_recognition_models
+setuptools
+
+# database
+supabase
+bcrypt
+
+segno # generate img of qr or url
+pillow # help to preprocess image
+
+streamlit
