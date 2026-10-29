@@ -7,10 +7,10 @@ from src.styles.theme import apply_theme
 
 # Configure main application entry point
 st.set_page_config(
-    page_title="AI Attendance System",
+    page_title="AttendAI — Intelligent Attendance System",
     page_icon="📋",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 # Apply centralized styling foundation

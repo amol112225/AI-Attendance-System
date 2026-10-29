@@ -12,6 +12,6 @@ def render_header(title: str = "AI Attendance System", description: str | None =
 def header_home():
     """Backward-compatible header for existing references."""
     render_header(
-        title="AI Attendance System",
-        description="A simple, automated attendance tracking system powered by classroom photos and voice recognition."
+        title="AttendAI",
+        description="Attendance, Made Intelligent."
     )

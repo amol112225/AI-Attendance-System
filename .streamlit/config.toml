@@ -1,15 +1,14 @@
 [theme]
-# Primary dark blue / navy
-primaryColor = "#1e3a8a"
+# Vibrant violet accent
+primaryColor = "#8B5CF6"
 
-# Clean light backgrounds
-backgroundColor = "#ffffff"
-secondaryBackgroundColor = "#f8fafc"
+# Deep navy canvas and dark blue secondary
+backgroundColor = "#0B1020"
+secondaryBackgroundColor = "#111A30"
 
-# High-contrast readable typography
-textColor = "#0f172a"
+# Crisp high-contrast text
+textColor = "#F8FAFC"
 font = "sans serif"
 
 [browser]
 gatherUsageStats = false
-
