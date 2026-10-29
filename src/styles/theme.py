@@ -14,6 +14,7 @@ COLOR_TEXT_PRIMARY = "#F8FAFC" # Crisp white text
 COLOR_TEXT_SECONDARY = "#A7B0C0" # Secondary readable slate
 COLOR_SUCCESS = "#10B981"      # Status green
 COLOR_WARNING = "#F59E0B"      # Status amber
+COLOR_DANGER = "#EF4444"       # Status red
 
 CUSTOM_CSS = f"""
 <style>
@@ -74,6 +75,74 @@ h2 {{
 
 h3 {{
     font-size: 1.15rem !important;
+}}
+
+/* Sidebar Styling */
+section[data-testid="stSidebar"] {{
+    background-color: #0E1528 !important;
+    border-right: 1px solid {COLOR_BORDER} !important;
+}}
+
+section[data-testid="stSidebar"] [data-testid="stSidebarHeader"] {{
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.5rem !important;
+}}
+
+section[data-testid="stSidebar"] div[role="radiogroup"] {{
+    gap: 6px !important;
+}}
+
+section[data-testid="stSidebar"] div[role="radiogroup"] label {{
+    background-color: {COLOR_NAVY_SURFACE} !important;
+    border: 1px solid {COLOR_BORDER} !important;
+    border-radius: 8px !important;
+    padding: 10px 14px !important;
+    margin-bottom: 6px !important;
+    color: {COLOR_TEXT_SECONDARY} !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}}
+
+section[data-testid="stSidebar"] div[role="radiogroup"] label:hover {{
+    border-color: rgba(139, 92, 246, 0.45) !important;
+    color: {COLOR_TEXT_PRIMARY} !important;
+}}
+
+section[data-testid="stSidebar"] div[role="radiogroup"] label[data-checked="true"],
+section[data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {{
+    background-color: rgba(139, 92, 246, 0.18) !important;
+    border-color: {COLOR_VIOLET} !important;
+    color: {COLOR_CYAN} !important;
+}}
+
+section[data-testid="stSidebar"] div[role="radiogroup"] label input[type="radio"],
+section[data-testid="stSidebar"] div[role="radiogroup"] label > div:first-child {{
+    display: none !important;
+}}
+
+/* Segmented Control Styling */
+div[data-testid="stSegmentedControl"] {{
+    background: {COLOR_NAVY_SURFACE} !important;
+    border: 1px solid {COLOR_BORDER} !important;
+    border-radius: 8px !important;
+    padding: 3px !important;
+    margin-bottom: 1.25rem !important;
+}}
+
+/* Dialog / Modal Styling */
+div[role="dialog"] {{
+    background-color: {COLOR_NAVY_SURFACE} !important;
+    border: 1px solid rgba(139, 92, 246, 0.4) !important;
+    border-radius: 12px !important;
+    color: {COLOR_TEXT_PRIMARY} !important;
+}}
+
+div[role="dialog"] h2 {{
+    color: {COLOR_TEXT_PRIMARY} !important;
+    font-size: 1.25rem !important;
 }}
 
 /* Navbar Styling */
@@ -244,6 +313,357 @@ h3 {{
     font-style: italic;
 }}
 
+/* Student Header Banner */
+.student-header-box {{
+    background: linear-gradient(135deg, #111A30 0%, #16203D 100%);
+    border: 1px solid rgba(139, 92, 246, 0.28);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}}
+
+.student-profile-summary {{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}}
+
+.student-avatar {{
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: #0B1020;
+    border: 1.5px solid {COLOR_CYAN};
+    color: {COLOR_CYAN};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+}}
+
+.student-title-block h2 {{
+    margin: 0 !important;
+    font-size: 1.35rem !important;
+    font-weight: 800 !important;
+    color: {COLOR_TEXT_PRIMARY} !important;
+}}
+
+.student-subtitle {{
+    font-size: 0.85rem;
+    color: {COLOR_TEXT_SECONDARY};
+    margin-top: 3px;
+}}
+
+.badge-demo {{
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    color: #FBBF24;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}}
+
+.badge-academic {{
+    background: rgba(34, 211, 238, 0.08);
+    border: 1px solid rgba(34, 211, 238, 0.25);
+    color: {COLOR_CYAN};
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}}
+
+/* Overview Metrics Grid */
+.metrics-grid {{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 1.25rem;
+    width: 100%;
+}}
+
+@media (max-width: 900px) {{
+    .metrics-grid {{
+        grid-template-columns: repeat(2, 1fr);
+    }}
+}}
+
+@media (max-width: 520px) {{
+    .metrics-grid {{
+        grid-template-columns: 1fr;
+    }}
+}}
+
+.metric-panel {{
+    background-color: {COLOR_NAVY_SURFACE};
+    border: 1px solid {COLOR_BORDER};
+    border-radius: 10px;
+    padding: 16px 18px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 115px;
+}}
+
+.metric-panel-header {{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}}
+
+.metric-panel-label {{
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: {COLOR_TEXT_SECONDARY};
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-family: 'JetBrains Mono', monospace;
+}}
+
+.metric-panel-icon {{
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}}
+
+.metric-panel-value {{
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: {COLOR_TEXT_PRIMARY};
+    line-height: 1.1;
+    margin-bottom: 4px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}}
+
+.metric-panel-desc {{
+    font-size: 0.78rem;
+    color: {COLOR_TEXT_SECONDARY};
+}}
+
+.advisory-bar {{
+    background: {COLOR_NAVY_SURFACE};
+    border: 1px solid rgba(34, 211, 238, 0.25);
+    border-left: 3px solid {COLOR_CYAN};
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.85rem;
+}}
+
+/* My Subjects Section */
+.subject-row-card {{
+    background-color: {COLOR_NAVY_SURFACE};
+    border: 1px solid {COLOR_BORDER};
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.3fr 1.2fr;
+    gap: 16px;
+    align-items: center;
+}}
+
+@media (max-width: 900px) {{
+    .subject-row-card {{
+        grid-template-columns: 1fr 1fr;
+    }}
+}}
+
+@media (max-width: 580px) {{
+    .subject-row-card {{
+        grid-template-columns: 1fr;
+    }}
+}}
+
+.subject-code-tag {{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: {COLOR_CYAN};
+    background: rgba(34, 211, 238, 0.08);
+    border: 1px solid rgba(34, 211, 238, 0.25);
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
+}}
+
+.subject-title {{
+    font-size: 1rem;
+    font-weight: 700;
+    color: {COLOR_TEXT_PRIMARY};
+    margin-bottom: 3px;
+}}
+
+.subject-faculty {{
+    font-size: 0.82rem;
+    color: {COLOR_TEXT_SECONDARY};
+}}
+
+.progress-track {{
+    background: #0B1020;
+    border: 1px solid {COLOR_BORDER};
+    border-radius: 6px;
+    height: 8px;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 6px;
+}}
+
+.progress-bar-fill {{
+    height: 100%;
+    border-radius: 6px;
+}}
+
+/* Attendance History Table */
+.history-table-container {{
+    overflow-x: auto;
+    width: 100%;
+    background: {COLOR_NAVY_SURFACE};
+    border: 1px solid {COLOR_BORDER};
+    border-radius: 8px;
+}}
+
+.history-table {{
+    min-width: 680px;
+    width: 100%;
+}}
+
+.history-row {{
+    display: grid;
+    grid-template-columns: 1.1fr 1.8fr 2.1fr 1.4fr 1.1fr;
+    gap: 12px;
+    padding: 11px 16px;
+    border-bottom: 1px solid {COLOR_BORDER};
+    font-size: 0.83rem;
+    align-items: center;
+}}
+
+.history-header {{
+    font-weight: 700;
+    color: {COLOR_TEXT_SECONDARY};
+    background: rgba(255, 255, 255, 0.02);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}}
+
+.status-present {{
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #34D399;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: inline-block;
+    white-space: nowrap;
+}}
+
+.status-absent {{
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #F87171;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: inline-block;
+    white-space: nowrap;
+}}
+
+.status-pending {{
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    color: #FBBF24;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: inline-block;
+    white-space: nowrap;
+}}
+
+/* Profile Cards */
+.profile-card {{
+    background: {COLOR_NAVY_SURFACE};
+    border: 1px solid {COLOR_BORDER};
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+}}
+
+.profile-grid {{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}}
+
+@media (max-width: 640px) {{
+    .profile-grid {{
+        grid-template-columns: 1fr;
+    }}
+}}
+
+.profile-field-label {{
+    font-size: 0.72rem;
+    color: {COLOR_TEXT_SECONDARY};
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 4px;
+}}
+
+.profile-field-val {{
+    font-size: 0.94rem;
+    font-weight: 600;
+    color: {COLOR_TEXT_PRIMARY};
+}}
+
+.biometric-panel {{
+    background: #0B1020;
+    border: 1px solid {COLOR_BORDER};
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+}}
+
 /* Standardized Content Panels */
 div[data-testid="stVerticalBlockBorderWrapper"] > div {{
     border: 1px solid {COLOR_BORDER} !important;
@@ -266,8 +686,8 @@ div[data-baseweb="input"] input {{
 
 /* Streamlit Native Dividers */
 hr {{
-    margin-top: 2rem !important;
-    margin-bottom: 2.25rem !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.75rem !important;
     border: none !important;
     height: 1px !important;
     background: {COLOR_BORDER} !important;
