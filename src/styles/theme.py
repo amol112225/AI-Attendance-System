@@ -92,6 +92,7 @@ section[data-testid="stSidebar"] div[role="radiogroup"] {{
     gap: 6px !important;
 }}
 
+
 section[data-testid="stSidebar"] div[role="radiogroup"] label {{
     background-color: {COLOR_NAVY_SURFACE} !important;
     border: 1px solid {COLOR_BORDER} !important;
@@ -105,6 +106,7 @@ section[data-testid="stSidebar"] div[role="radiogroup"] label {{
     width: 100% !important;
     box-sizing: border-box !important;
 }}
+
 
 section[data-testid="stSidebar"] div[role="radiogroup"] label:hover {{
     border-color: rgba(139, 92, 246, 0.45) !important;
@@ -361,6 +363,106 @@ div[role="dialog"] h2 {{
     font-size: 0.85rem;
     color: {COLOR_TEXT_SECONDARY};
     margin-top: 3px;
+}}
+
+/* Teacher Header Banner */
+.teacher-header-box {{
+    background: linear-gradient(135deg, #111A30 0%, #16203D 100%);
+    border: 1px solid rgba(139, 92, 246, 0.28);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}}
+
+.teacher-avatar {{
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: #0B1020;
+    border: 1.5px solid {COLOR_VIOLET};
+    color: {COLOR_VIOLET};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+}}
+
+/* Workflow Explanation Box */
+.workflow-explanation-box {{
+    background: #0B1020;
+    border: 1px solid {COLOR_BORDER};
+    border-left: 3px solid {COLOR_CYAN};
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+}}
+
+/* Roster Table */
+.roster-table-container {{
+    overflow-x: auto;
+    width: 100%;
+    background: {COLOR_NAVY_SURFACE};
+    border: 1px solid {COLOR_BORDER};
+    border-radius: 8px;
+}}
+
+.roster-table {{
+    min-width: 680px;
+    width: 100%;
+}}
+
+.roster-row {{
+    display: grid;
+    grid-template-columns: 1.8fr 1.3fr 2.1fr 1.3fr 1.4fr;
+    gap: 12px;
+    padding: 11px 16px;
+    border-bottom: 1px solid {COLOR_BORDER};
+    font-size: 0.83rem;
+    align-items: center;
+}}
+
+.roster-header {{
+    font-weight: 700;
+    color: {COLOR_TEXT_SECONDARY};
+    background: rgba(255, 255, 255, 0.02);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}}
+
+.badge-excellent {{
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #34D399;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: inline-block;
+    white-space: nowrap;
+}}
+
+.badge-risk {{
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #F87171;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: inline-block;
+    white-space: nowrap;
 }}
 
 .badge-demo {{
