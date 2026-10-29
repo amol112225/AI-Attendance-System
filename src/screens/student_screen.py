@@ -173,6 +173,9 @@ def join_subject_dialog():
     )
     st.caption("Verification check is local. Database enrollment will connect via Supabase in a future step.")
 
+    def _on_close_join_dialog():
+        st.session_state["show_join_dialog"] = False
+
     col_submit, col_cancel = st.columns([1, 1])
     with col_submit:
         if st.button("Submit Code", type="primary", use_container_width=True, key="btn_dlg_submit"):
@@ -182,9 +185,7 @@ def join_subject_dialog():
                 st.success(f"Format check passed for '{code_input.strip().upper()}'.")
                 st.info("Demo Mode: Real student enrollment requires Supabase authentication and database connection, which will be integrated in a future step.")
     with col_cancel:
-        if st.button("Close", use_container_width=True, key="btn_dlg_close"):
-            st.session_state["show_join_dialog"] = False
-            st.rerun()
+        st.button("Close", use_container_width=True, key="btn_dlg_close", on_click=_on_close_join_dialog)
 
 # =============================================================================
 # SECTION RENDERERS
@@ -645,6 +646,10 @@ def student_screen():
     # Session State Initialization
     if "student_active_section" not in st.session_state:
         st.session_state["student_active_section"] = "Overview"
+    if "student_sidebar_radio" not in st.session_state:
+        st.session_state["student_sidebar_radio"] = st.session_state["student_active_section"]
+    if "student_main_segment" not in st.session_state:
+        st.session_state["student_main_segment"] = st.session_state["student_active_section"]
 
     sections = ["Overview", "My Subjects", "Attendance History", "My Profile"]
 
@@ -680,23 +685,17 @@ def student_screen():
             """
         )
 
-        # Active item index calculation
-        cur_idx = 0
-        if st.session_state["student_active_section"] in sections:
-            cur_idx = sections.index(st.session_state["student_active_section"])
-
         def on_sidebar_nav_change():
             st.session_state["student_active_section"] = st.session_state["student_sidebar_radio"]
+            st.session_state["student_main_segment"] = st.session_state["student_sidebar_radio"]
 
-        selected_nav = st.radio(
+        st.radio(
             "Student Portal Navigation",
             options=sections,
-            index=cur_idx,
             key="student_sidebar_radio",
             on_change=on_sidebar_nav_change,
             label_visibility="collapsed",
         )
-        st.session_state["student_active_section"] = selected_nav
 
         # Quick Return to Home
         st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
@@ -746,18 +745,17 @@ def student_screen():
 
     # 2. In-Page Responsive Navigation Bar (Allows 1-click tab switching on mobile/tablet)
     def on_segmented_change():
-        st.session_state["student_active_section"] = st.session_state["student_main_segment"]
+        if st.session_state["student_main_segment"]:
+            st.session_state["student_active_section"] = st.session_state["student_main_segment"]
+            st.session_state["student_sidebar_radio"] = st.session_state["student_main_segment"]
 
-    active_tab = st.segmented_control(
+    st.segmented_control(
         "Dashboard Section View",
         options=sections,
-        default=st.session_state["student_active_section"],
         key="student_main_segment",
         on_change=on_segmented_change,
         label_visibility="collapsed",
     )
-    if active_tab:
-        st.session_state["student_active_section"] = active_tab
 
     active_section = st.session_state["student_active_section"]
 

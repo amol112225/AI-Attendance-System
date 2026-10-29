@@ -308,6 +308,9 @@ def create_subject_dialog():
     hall = st.text_input("Assigned Lecture Hall / Lab", placeholder="e.g. Hall A-101", key="create_sub_hall")
     st.caption("Required fields are marked with *. Database persistence will connect via Supabase in a future step.")
 
+    def _on_close_create_subject():
+        st.session_state["show_create_subject_dialog"] = False
+
     col1, col2 = st.columns([1, 1])
     with col1:
         if st.button("Save & Create Subject", type="primary", use_container_width=True, key="btn_save_subject"):
@@ -317,9 +320,7 @@ def create_subject_dialog():
                 st.success(f"Subject '{subj_code.strip().upper()} — {subj_name.strip()}' validated successfully!")
                 st.info("Demo Mode: Real subject creation requires Supabase PostgreSQL, which will be integrated in a future step. No database records were modified.")
     with col2:
-        if st.button("Close", use_container_width=True, key="btn_close_create_subject"):
-            st.session_state["show_create_subject_dialog"] = False
-            st.rerun()
+        st.button("Close", use_container_width=True, key="btn_close_create_subject", on_click=_on_close_create_subject)
 
 @st.dialog("Simulated Session Preview")
 def simulated_session_dialog():
@@ -361,16 +362,21 @@ def simulated_session_dialog():
     )
 
     st.write("Click below to inspect the proposed attendance roster and perform teacher sign-off.")
+
+    def _on_proceed_to_review():
+        st.session_state["show_sim_session_dialog"] = False
+        st.session_state["teacher_active_section"] = "Attendance Review"
+        st.session_state["teacher_sidebar_radio"] = "Attendance Review"
+        st.session_state["teacher_main_segment"] = "Attendance Review"
+
+    def _on_dismiss_sim():
+        st.session_state["show_sim_session_dialog"] = False
+
     col1, col2 = st.columns([1, 1])
     with col1:
-        if st.button("Proceed to Attendance Review →", type="primary", use_container_width=True, key="btn_proceed_review"):
-            st.session_state["show_sim_session_dialog"] = False
-            st.session_state["teacher_active_section"] = "Attendance Review"
-            st.rerun()
+        st.button("Proceed to Attendance Review →", type="primary", use_container_width=True, key="btn_proceed_review", on_click=_on_proceed_to_review)
     with col2:
-        if st.button("Dismiss", use_container_width=True, key="btn_dismiss_sim"):
-            st.session_state["show_sim_session_dialog"] = False
-            st.rerun()
+        st.button("Dismiss", use_container_width=True, key="btn_dismiss_sim", on_click=_on_dismiss_sim)
 
 # =============================================================================
 # SECTION RENDERERS
@@ -801,20 +807,26 @@ def _render_review_section():
     col_flag1, col_flag2 = st.columns(2)
     with col_flag1:
         st.markdown("**Tanvi Joshi (2026-102)** • *Flag: Partial face occlusion*")
+        tanvi_options = ["Present (Verified in class)", "Absent", "Excused Leave"]
+        cur_tanvi = st.session_state["review_overrides"].get("2026-102", "Present")
+        tanvi_idx = 0 if cur_tanvi == "Present" else (1 if cur_tanvi == "Absent" else 2)
         tanvi_choice = st.selectbox(
             "Decision for Tanvi Joshi",
-            options=["Present (Verified in class)", "Absent", "Excused Leave"],
-            index=0 if st.session_state["review_overrides"].get("2026-102") == "Present" else 0,
+            options=tanvi_options,
+            index=tanvi_idx,
             key="tanvi_override_sel",
         )
         st.session_state["review_overrides"]["2026-102"] = "Present" if "Present" in tanvi_choice else ("Absent" if "Absent" in tanvi_choice else "Excused")
 
     with col_flag2:
         st.markdown("**Rahul Verma (2026-144)** • *Flag: Unrecognized face*")
+        rahul_options = ["Absent (Confirmed not in room)", "Present (Manual check-in)", "Excused Leave"]
+        cur_rahul = st.session_state["review_overrides"].get("2026-144", "Absent")
+        rahul_idx = 0 if cur_rahul == "Absent" else (1 if cur_rahul == "Present" else 2)
         rahul_choice = st.selectbox(
             "Decision for Rahul Verma",
-            options=["Absent (Confirmed not in room)", "Present (Manual check-in)", "Excused Leave"],
-            index=0 if st.session_state["review_overrides"].get("2026-144") == "Absent" else 0,
+            options=rahul_options,
+            index=rahul_idx,
             key="rahul_override_sel",
         )
         st.session_state["review_overrides"]["2026-144"] = "Present" if "Present" in rahul_choice else ("Absent" if "Absent" in rahul_choice else "Excused")
@@ -859,7 +871,7 @@ def _render_history_section():
     with col_hf3:
         st.write("")
         st.write("")
-        st.button("Reset Filters", use_container_width=True, key="btn_reset_t_filters", on_click=_reset_history_filters if False else _reset_teacher_history_filters)
+        st.button("Reset Filters", use_container_width=True, key="btn_reset_t_filters", on_click=_reset_teacher_history_filters)
 
     # Filter evaluation
     filtered_sessions = []
@@ -1036,6 +1048,10 @@ def teacher_screen():
     # Session State Initialization
     if "teacher_active_section" not in st.session_state:
         st.session_state["teacher_active_section"] = "Overview"
+    if "teacher_sidebar_radio" not in st.session_state:
+        st.session_state["teacher_sidebar_radio"] = st.session_state["teacher_active_section"]
+    if "teacher_main_segment" not in st.session_state:
+        st.session_state["teacher_main_segment"] = st.session_state["teacher_active_section"]
 
     sections = [
         "Overview",
@@ -1077,22 +1093,17 @@ def teacher_screen():
             """
         )
 
-        cur_idx = 0
-        if st.session_state["teacher_active_section"] in sections:
-            cur_idx = sections.index(st.session_state["teacher_active_section"])
-
         def on_sidebar_teacher_nav_change():
             st.session_state["teacher_active_section"] = st.session_state["teacher_sidebar_radio"]
+            st.session_state["teacher_main_segment"] = st.session_state["teacher_sidebar_radio"]
 
-        selected_nav = st.radio(
+        st.radio(
             "Teacher Portal Navigation",
             options=sections,
-            index=cur_idx,
             key="teacher_sidebar_radio",
             on_change=on_sidebar_teacher_nav_change,
             label_visibility="collapsed",
         )
-        st.session_state["teacher_active_section"] = selected_nav
 
         st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
         if st.button("← Return to Home", key="btn_return_home_teacher_sidebar", use_container_width=True):
@@ -1141,18 +1152,17 @@ def teacher_screen():
 
     # 2. Responsive Segmented Control for Mobile / Tablet view
     def on_teacher_segment_change():
-        st.session_state["teacher_active_section"] = st.session_state["teacher_main_segment"]
+        if st.session_state["teacher_main_segment"]:
+            st.session_state["teacher_active_section"] = st.session_state["teacher_main_segment"]
+            st.session_state["teacher_sidebar_radio"] = st.session_state["teacher_main_segment"]
 
-    active_tab = st.segmented_control(
+    st.segmented_control(
         "Teacher Section View",
         options=sections,
-        default=st.session_state["teacher_active_section"],
         key="teacher_main_segment",
         on_change=on_teacher_segment_change,
         label_visibility="collapsed",
     )
-    if active_tab:
-        st.session_state["teacher_active_section"] = active_tab
 
     active_section = st.session_state["teacher_active_section"]
 
